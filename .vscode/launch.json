@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "BackendApplication",
+      "request": "launch",
+      "mainClass": "project.backend.BackendApplication",
+      "projectName": "backend",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
