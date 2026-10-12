@@ -15,21 +15,19 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-
-import lombok.RequiredArgsConstructor;
 import project.backend.security.GithubOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity 
-@RequiredArgsConstructor 
 public class SecurityConfig
 {
-    private final GithubOAuth2UserService githubOauth2UserService;
-    private final AuthenticationSuccessHandler oauth2SuccessHandler;
-    private final AuthenticationFailureHandler oauth2FailureHandler;
 
     @Bean 
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception 
+    SecurityFilterChain securityFilterChain(
+        HttpSecurity http,
+        GithubOAuth2UserService githubOauth2UserService,
+        AuthenticationSuccessHandler oauth2SuccessHandler,
+        AuthenticationFailureHandler oauth2FailureHandler) throws Exception 
     {
         http
             .cors(Customizer.withDefaults())
