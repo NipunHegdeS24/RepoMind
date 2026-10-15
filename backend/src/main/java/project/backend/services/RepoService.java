@@ -42,6 +42,7 @@ public class RepoService
                     .orElseGet(Repository::new);
 
             String fullName = String.valueOf(remote.get("full_name"));
+            @SuppressWarnings("null")
             String[] parts = fullName.split("/", 2);
 
             repo.setUserId(userId);
