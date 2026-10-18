@@ -24,6 +24,7 @@ The AI answers using **your actual code** and shows which files the answer came 
 8. [How to run it locally](#how-to-run-it-locally)
 9. [Settings you can change](#settings-you-can-change)
 10. [Words you might not know](#words-you-might-not-know)
+11. [Quick start (all commands)](#quick-start-all-commands)
 
 ---
 
@@ -415,3 +416,39 @@ In `backend/.../services/ai/RagSettings.java`:
 | **Prompt** | The text/instructions we send to the AI |
 | **SSE (Server-Sent Events)** | A way for the server to keep sending small updates to the browser, which is how the answer appears word by word |
 | **Citation** | A pointer to the file the answer came from |
+
+---
+
+## Quick start (all commands)
+
+Already set up the `.env` file ([Step 1](#step-1--create-the-env-file))? Then these are all the commands you need. Use **3 terminals**, starting from the project root.
+
+**Terminal 1 — Database**
+
+```bash
+docker compose up -d
+```
+
+**Terminal 2 — Backend** (http://localhost:8080)
+
+```bash
+cd backend
+set -a; source ../.env; set +a
+./mvnw spring-boot:run
+```
+
+**Terminal 3 — Frontend** (http://localhost:3000)
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+Then open **http://localhost:3000** in your browser.
+
+**To stop everything:** press `Ctrl + C` in terminals 2 and 3, then run:
+
+```bash
+docker compose down
+```
