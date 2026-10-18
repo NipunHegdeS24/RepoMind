@@ -1,11 +1,11 @@
 export type IndexStatus = "PENDING" | "INDEXING" | "READY" | "FAILED";
 
 export type User = {
-    id: string;
-    githubId: number;
-    githubUsername: string;
-    displayName: string;
-    avatarUrl: string | null
+  id: string;
+  githubId: number;
+  githubUsername: string;
+  displayName: string;
+  avatarUrl: string | null;
 };
 
 export type Repository = {
@@ -37,6 +37,27 @@ export type IndexStatusResponse = {
   errorMessage: string | null;
 };
 
+export type ChatSession = {
+  id: string;
+  repositoryId: string;
+  title: string;
+  createdAt: string;
+};
+
+export type Citation = {
+  filePath: string;
+  startLine: number | null;
+  endLine: number | null;
+  language: string | null;
+};
+
+export type ChatMessage = {
+  id: string;
+  role: "USER" | "ASSISTANT";
+  content: string;
+  citations: Citation[];
+  createdAt: string;
+};
 
 
 export class ApiError extends Error {
@@ -90,17 +111,28 @@ export async function apiFetch<T>(
 }
 
 export const api = {
-    me: () => apiFetch<User>("/api/auth/me"),
-    logout: () => 
-        apiFetch<void>("/api/auth/logout", {
-            method: "POST",
-        }),
+  me: () => apiFetch<User>("/api/auth/me"),
+  logout: () =>
+    apiFetch<void>("/api/auth/logout", {
+      method: "POST",
+    }),
 
-    listRepos: (refresh = true) =>
-      apiFetch<Repository[]>(`/api/repos?refresh=${refresh}`),
-    getRepo: (id: string) => apiFetch<Repository>(`/api/repos/${id}`),
-    startIndex: (id: string) =>
-      apiFetch<Repository>(`/api/repos/${id}/index`, { method: "POST" }),
-    indexStatus: (id: string) =>
-      apiFetch<IndexStatusResponse>(`/api/repos/${id}/status`),
+  listRepos: (refresh = true) =>
+    apiFetch<Repository[]>(`/api/repos?refresh=${refresh}`),
+  getRepo: (id: string) => apiFetch<Repository>(`/api/repos/${id}`),
+  startIndex: (id: string) =>
+    apiFetch<Repository>(`/api/repos/${id}/index`, { method: "POST" }),
+  indexStatus: (id: string) =>
+    apiFetch<IndexStatusResponse>(`/api/repos/${id}/status`),
+   createSession: (repositoryId: string, title?: string) =>
+    apiFetch<ChatSession>("/api/chat/sessions", {
+      method: "POST",
+      body: JSON.stringify({ repositoryId, title }),
+    }),
+  listSessions: (repositoryId: string) =>
+    apiFetch<ChatSession[]>(
+      `/api/chat/sessions?repositoryId=${encodeURIComponent(repositoryId)}`
+    ),
+  getMessages: (sessionId: string) =>
+    apiFetch<ChatMessage[]>(`/api/chat/sessions/${sessionId}`),
 };
