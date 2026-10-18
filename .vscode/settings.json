@@ -1,8 +1,9 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home",
-    "java.jdt.ls.lombokSupport.enabled": true,
-    "java.jdt.ls.javac.enabled": "on",
+    "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home",
+    "java.jdt.ls.lombokSupport.enabled": false,
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable -javaagent:/Users/nipun/.m2/repository/org/projectlombok/lombok/1.18.48/lombok-1.18.48.jar",
+    "java.jdt.ls.javac.enabled": "off",
     "java.configuration.runtimes": [
         {
             "name": "JavaSE-21",

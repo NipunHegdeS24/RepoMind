@@ -56,7 +56,6 @@ public class RepoController
         return repoService.status(id, userId);
     }
 
-    @SuppressWarnings("unchecked")
     @PostMapping("/{id}/index")
     public ResponseEntity<RepositoryResponse> index ( @PathVariable UUID id)
     {
