@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/message";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
 import type { ChatMessage, Repository } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
@@ -23,11 +24,13 @@ export function ChatMessages({
   repo,
   messages,
   streamText,
+  streaming,
   isLoading,
 }: {
   repo: Repository;
   messages: ChatMessage[];
   streamText?: string;
+  streaming?: boolean;
   isLoading?: boolean;
 }) {
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -106,6 +109,26 @@ export function ChatMessages({
               </Message>
             );
           })}
+
+          {streaming && !streamText && (
+            <Message align="start">
+              <MessageAvatar>
+                <Avatar className="size-8">
+                  <AvatarFallback className="bg-muted">
+                    <Bot className="size-4" />
+                  </AvatarFallback>
+                </Avatar>
+              </MessageAvatar>
+              <MessageContent>
+                <Bubble variant="muted" align="start">
+                  <BubbleContent className="flex items-center gap-2 px-4 py-3 text-sm text-muted-foreground">
+                    <Spinner />
+                    Thinking…
+                  </BubbleContent>
+                </Bubble>
+              </MessageContent>
+            </Message>
+          )}
 
           {streamText && (
             <Message align="start">

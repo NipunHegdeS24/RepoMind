@@ -1,6 +1,7 @@
 package project.backend.services.ai;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.ai.chat.client.ChatClient;
@@ -71,7 +72,9 @@ public class ChatStreamHandler
         try {
             emitter.send(SseEmitter.event()
                     .name("token")
-                    .data(token, MediaType.APPLICATION_JSON));
+                    // Wrapped in an object so Jackson JSON-encodes it; a bare String is written
+                    // raw, which breaks client-side JSON.parse for most tokens
+                    .data(Map.of("text", token), MediaType.APPLICATION_JSON));
         } catch (Exception ex) {
             throw new IllegalStateException(ex);
         }
